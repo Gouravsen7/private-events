@@ -1,0 +1,24 @@
+<div id="<%= dom_id current_user %>" class="container mx-auto mt-8">
+
+  <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+    <h2 class="text-2xl font-semibold mb-4">User Details</h2>
+    <p><strong>ID:</strong> <%= current_user.id %></p>
+    <p><strong>Email:</strong> <%= current_user.email %></p>
+  </div>
+
+  <div id="my-events" class="bg-white shadow-md rounded-lg p-6 mb-4">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-semibold">My Events</h1>
+      <%= link_to "New event", new_event_path, class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" %>
+    </div>
+    <%= render partial: "events/events", locals: { current_user: current_user, events: current_user.events } %>
+  </div>
+
+  <div id="attended-events" class="bg-white shadow-md rounded-lg p-6 mb-4">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-semibold">Attended Events</h1>
+      <%= link_to "Explore & Join", root_path, class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" %>
+    </div>
+    <%= render partial: "events/events", locals: { current_user: current_user, events: current_user.attended_events } %>
+  </div>
+</div>

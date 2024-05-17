@@ -1,0 +1,14 @@
+<header class="bg-gray-800 py-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <%= link_to "Home", root_path, class: "text-white font-semibold" %>
+    <%= link_to "My Requests", attendee_requests_requests_path, class: "text-white font-semibold" %>
+    <%= link_to "Event Requests", owner_requests_requests_path, class: "text-white font-semibold" %>
+    <%= link_to "My Profile", user_path, class: "text-white font-semibold" %>
+    <div>
+      <% if user_signed_in? %>
+        <span class="text-white"><%= current_user.email %></span>
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'text-white' %>
+      <% end %>
+    </div>
+  </div>
+</header>

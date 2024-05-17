@@ -1,0 +1,58 @@
+<%= form_with(model: event, class: "max-w-md mx-auto w-full") do |form| %>
+  <% if event.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <h2 class="font-bold mb-2"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+        <% event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :name, class: "form-input w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :location, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :location, class: "form-input w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :date, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.date_field :date, value: Date.today, class: "form-input w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :start_time, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.time_field :start_time, value: Time.now.strftime('%H:%M'), class: "form-input w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :end_time, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.time_field :end_time, value: (Time.now + 1.hour).strftime('%H:%M'), class: "form-input w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :event_type, "Event Type", class: "block text-gray-700 font-bold mb-2" %>
+
+    <div class="flex items-center space-x-4">
+      <label for="private_event" class="flex items-center cursor-pointer">
+        <%= form.radio_button :event_type, "private", id: "private_event", class: "mr-2" %>
+        <span class="text-gray-700 font-bold">Private</span>
+      </label>
+
+      <label for="public_event" class="flex items-center cursor-pointer">
+        <%= form.radio_button :event_type, "public", id: "public_event", class: "mr-2" %>
+        <span class="text-gray-700 font-bold">Public</span>
+      </label>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit "Save", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" %>
+  </div>
+<% end %>

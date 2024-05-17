@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="flex justify-between items-center mb-4">
+  <a href="javascript:history.go(-1)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
+
+  <div class="ml-auto flex space-x-2">
+    <% if @event.upcoming? %>
+      <% if @event.attendees.include?(current_user) %>
+        <%= button_to "Leave", leave_event_path(@event), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <% elsif @event.creator != current_user %>
+        <%= render_button_based_on_requests(@event, current_user) %>
+      <% end %>
+    <% end %>
+    <% if current_user == @event.creator %>
+      <%= render_creator_buttons(@event) %>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: "events/event", locals: { event: @event } %>

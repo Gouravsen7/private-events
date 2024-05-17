@@ -1,0 +1,18 @@
+<%= form_with(model: @request, url: bulk_create_requests_path, local: true) do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, 'Event:', class: "block text-gray-700 font-bold mb-2" %>
+    <div class="flex items-center">
+      <span class="inline-block bg-gray-200 text-gray-700 px-3 py-1 rounded-lg shadow-sm">
+        <%= @event.name %>
+      </span>
+    </div>
+    <%= form.hidden_field :event_id, value: @event.id %>
+  </div>
+  
+  <div class="mb-4">
+    <%= form.label :attendee_ids, 'Attendees:', class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.select :attendee_ids, options_for_select(@users.map { |user| [user.email, user.id] }, @users.first.id), { include_hidden: false }, { multiple: true, class: "form-multiselect w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" } %>
+  </div>
+ 
+  <%= form.submit "Create Requests", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+<% end %>

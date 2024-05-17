@@ -1,0 +1,46 @@
+<div id="<%= dom_id event %>" class="bg-white shadow-md rounded-lg p-6 mb-4">
+  <h2 class="text-2xl font-semibold mb-4">Event Details</h2>
+  
+  <div class="mb-4">
+    <strong>Name:</strong>
+    <span><%= event.name %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>Location:</strong>
+    <span><%= event.location %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>Date:</strong>
+    <span><%= event.date.strftime('%b %d, %Y') %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>Start Time:</strong>
+    <span><%= event.start_at %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>End Time:</strong>
+    <span><%= event.end_at %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>Event Type</strong>
+    <span><%= event.event_type %></span>
+  </div>
+
+  <div class="mb-4">
+    <strong>Attendees:</strong>
+    <% if event.attendees.any? %>
+      <ul>
+        <% event.attendees.each do |attendee| %>
+          <li><%= attendee.email %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No attendees for this event.</p>
+    <% end %>
+  </div>
+</div>

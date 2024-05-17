@@ -1,0 +1,30 @@
+<% if requests.any? %>
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th class="text-left">Event Name</th>
+        <th class="text-left">Event Date</th>
+        <th class="text-left">Requestor</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% requests.each do |request| %>
+        <tr class="border-b">
+          <td><%= request.event.name %></td>
+          <td><%= request.event.date&.strftime('%b %d, %Y') %></td>
+          <td><%= request.requestor == 'owner' ? request.event.creator.email : request.attendee.email %></td>
+          <td class="text-right">
+            <div class="flex justify-end space-x-2">
+              <%= button_to "Approve", approve_request_path(request), method: :patch, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded", data: { confirm: "Are you sure you want to approve this request?" } %>
+              <%= button_to "Reject", reject_request_path(request), method: :patch, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", data: { confirm: "Are you sure you want to reject this request?" } %>
+              <%= link_to "View", request.event, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No requests found.</p>
+<% end %>

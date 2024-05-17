@@ -1,0 +1,41 @@
+<% if events.any? %>
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th class="text-left">Name</th>
+        <th class="text-left">Date</th>
+        <th class="text-left">Creator Email</th>
+        <th class="text-left">Event Type</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.each do |event| %>
+        <tr class="border-b">
+          <td><%= event.name %></td>
+          <td><%= event.date&.strftime('%b %d, %Y') %></td>
+          <td><%= event.creator.email %></td>
+          <td><%= event.event_type %></td>
+          <td class="text-right">
+            <div class="flex justify-end space-x-2">
+              <% if event.upcoming? %>
+                <% if event.attendees.include?(current_user) %>
+                  <%= button_to "Leave", leave_event_path(event), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+                <% elsif event.creator != current_user %>
+                  <%= render_button_based_on_requests(event, current_user) %>
+                <% end %>
+              <% end %>
+  
+              <%= link_to "View", event, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+              <% if current_user == event.creator %>
+                <%= render_creator_buttons(event) %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No events found.</p>
+<% end %>
